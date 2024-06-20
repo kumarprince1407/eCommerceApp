@@ -1,7 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./cartStyle.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  removeSingleItem,
+  emptyEntireCart,
+} from "../redux/features/cartSlice";
+
+import toast from "react-hot-toast";
+
 const CartDetails = () => {
-  const arr = [0, 1];
+  //const arr = [0, 1];
+  const { carts } = useSelector((state) => state.allCart);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [quantity, setTotalQuantity] = useState(0);
+
+  const dispatch = useDispatch();
+
+  //add To cart
+  const handleIncrement = (e) => {
+    dispatch(addToCart(e));
+  };
+
+  //remove from cart
+  const handleDelete = (e) => {
+    dispatch(removeFromCart(e));
+    toast.success("Item removed from your cart");
+  };
+
+  //remove single item count
+  const handleSingleItemRemoval = (e) => {
+    dispatch(removeSingleItem(e));
+  };
+
+  //clear cart
+  const handleCartEmpty = () => {
+    dispatch(emptyEntireCart());
+    toast.success("Your cart is empty!");
+  };
+
+  //count total price
+  // const total = () => {
+  //   let totalPrice = 0;
+  //   carts.map((elem, index) => {
+  //     totalPrice += elem.price * elem.qnty + totalPrice;
+  //   });
+  //   setTotalPrice(totalPrice);
+  // };
+  // useEffect(() => {
+  //   total();
+  // }, [total]);
+
+  useEffect(() => {
+    const total = () => {
+      let totalPrice = 0;
+      carts.forEach((elem) => {
+        totalPrice += elem.price * elem.qnty;
+      });
+      setTotalPrice(totalPrice);
+    };
+    total();
+  }, [carts]);
+
+  useEffect(() => {
+    const totalCartItems = () => {
+      let quantity = 0;
+      carts.forEach((elem) => {
+        quantity += elem.qnty;
+      });
+      setTotalQuantity(quantity);
+    };
+    totalCartItems();
+  }, [carts]);
+
   return (
     <>
       <div className="row justify-content-center m-0">
@@ -9,9 +82,14 @@ const CartDetails = () => {
           <div className="card">
             <div className="card-header bg-dark p-3">
               <div className="card-header-flex">
-                <h5 className="text-white m-0">Cart Calculation(1)</h5>
-                {arr.length > 0 ? (
-                  <button className="btn btn-danger mt-0 btn-sm">
+                <h5 className="text-white m-0">
+                  Cart Calculation{carts.length > 0 ? `(${carts.length})` : ""}
+                </h5>
+                {carts.length > 0 ? (
+                  <button
+                    className="btn btn-danger mt-0 btn-sm"
+                    onClick={handleCartEmpty}
+                  >
                     <i className="fa fa-trash-alt mr-2"></i>
                     <span>Empty Cart</span>
                   </button>
@@ -21,7 +99,7 @@ const CartDetails = () => {
               </div>
             </div>
             <div className="card-body p-0">
-              {arr.length === 0 ? (
+              {carts.length === 0 ? (
                 <table className="table cart-table mb-0">
                   <tbody>
                     <tr>
@@ -51,54 +129,84 @@ const CartDetails = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {arr.map((data, index) => {
+                    {carts.map((data, index) => {
                       return (
                         <>
                           <tr>
                             <td>
-                              <button className="prdct-delete">
+                              <button
+                                className="prdct-delete"
+                                onClick={() => handleDelete(data.id)}
+                              >
                                 {" "}
                                 <i className="fa fa-trash-alt mr-2"></i>
                               </button>
                             </td>
                             <td>
                               <div className="product-img">
-                                <img src="/logo192.png" alt="" />
+                                <img src={data.imgdata} alt="" />
                               </div>{" "}
                             </td>
                             <td>
                               <div className="product-name">
-                                <p>Punjabi</p>
+                                <p>{data.dish}</p>
                               </div>{" "}
                             </td>
                             <td>
                               <div className="product-price">
-                                <p>300</p>
+                                <p>{data.price}</p>
                               </div>{" "}
                             </td>
                             <td>
                               <div className=".prdct-qty-container">
-                                <button className="prdct-qty-btn" type="button">
+                                <button
+                                  className="prdct-qty-btn"
+                                  type="button"
+                                  onClick={
+                                    data.qnty <= 1
+                                      ? () => handleDelete(data.id)
+                                      : () => handleSingleItemRemoval(data)
+                                  }
+                                >
                                   <i className="fa fa-minus"></i>
                                 </button>
                                 <input
                                   type="text"
                                   className="qty-input-box"
-                                  value={1}
+                                  value={data.qnty}
                                   disabled
                                   name=""
                                   id=""
                                 />
-                                <button className="prdct-qty-btn" type="button">
+                                <button
+                                  className="prdct-qty-btn"
+                                  type="button"
+                                  onClick={() => handleIncrement(data)}
+                                >
                                   <i className="fa fa-plus"></i>
                                 </button>
                               </div>
+                            </td>
+                            <td className="text-right">
+                              {data.qnty * data.price}
                             </td>
                           </tr>
                         </>
                       );
                     })}
                   </tbody>
+                  <tfoot>
+                    <th>&nbsp;</th>
+                    <th colSpan={3}>&nbsp;</th>
+                    <th>
+                      Items in Cart <span className="ml-2 mr-2">:</span>
+                      <span className="text-danger">{quantity}</span>
+                    </th>
+                    <th className="text-right">
+                      Total Price <span className="ml-2 mr-2">:</span>
+                      <span className="text-danger">{totalPrice}</span>
+                    </th>
+                  </tfoot>
                 </table>
               )}
             </div>

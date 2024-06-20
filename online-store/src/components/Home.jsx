@@ -2,11 +2,22 @@ import React, { useState } from "react";
 import "./style.css";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import CardData from "./CardData";
+import CardsData from "./CardsData";
+import { addToCart } from "../redux/features/cartSlice";
+import { useDispatch } from "react-redux";
+
+import toast from "react-hot-toast";
 
 const Home = () => {
-  console.log("Card data: ", CardData);
-  const [cartData, setCartData] = useState(CardData);
+  //console.log("Card data: ", CardsData);
+  const [cartData, setCartData] = useState(CardsData);
+  const dispatch = useDispatch();
+
+  //add to cart
+  const send = (e) => {
+    dispatch(addToCart(e));
+    toast.success("Item added to cart");
+  };
   return (
     <>
       <section className="item_section mt-4 container">
@@ -54,6 +65,7 @@ const Home = () => {
                         }}
                         variant="outline-light"
                         className="mt-2 mb-2"
+                        onClick={() => send(element)}
                       >
                         Add To Cart
                       </Button>
