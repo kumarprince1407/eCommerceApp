@@ -4,9 +4,14 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import SearchBar from "./SearchBar";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
-const Header = () => {
+// Add Filtering
+const Header = ({ setSearchInput }) => {
+  //Accepting the setSearchInput as prop
+
+  const { pathname } = useLocation(); //Get current path
+
   //For  displaying cart items count in the 'cart icon' present inside the header
   const { carts } = useSelector((state) => state.allCart);
   console.log(carts);
@@ -18,7 +23,8 @@ const Header = () => {
           <NavLink to="/" className="text-decoration-none text-light mx-2">
             <h3 className="text-light">Online store</h3>
           </NavLink>
-          <SearchBar />
+          {pathname === "/" && <SearchBar setSearchInput={setSearchInput} />}{" "}
+          {/* Pass setSearchInput as prop */}
           <NavLink to="/cart" className="text-decoration-none text-light mx-2">
             <div id="ex4">
               <span
