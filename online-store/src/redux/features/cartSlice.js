@@ -1,15 +1,18 @@
+//cartSlice.js
 import { createSlice } from "@reduxjs/toolkit"; //1. Import the createSlice function
 
 const initialState = {
   carts: [],
 };
 
-//2.Now we will invoke the function and assign it to a constant.
+//2.Invoking the 'createSlice' function and assigning it to a constantvariable.
 const cartSlice = createSlice({
-  name: "cartSlice",
-  initialState: initialState,
+  name: "cartSlice", //This string is used to identify the slice
+  initialState: initialState, //Sets the initial stste of the slice
   reducers: {
-    //add to cart
+    //The object where we define the reducer functions that will handle actions related to the slice
+
+    //state represents the current state of the slice whereas action represents the dispatched action
     addToCart: (state, action) => {
       //console.log("action:", action);
 

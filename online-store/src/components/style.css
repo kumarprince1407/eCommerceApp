@@ -98,3 +98,31 @@ body {
     font-size: 12px;
   }
 }
+
+/* Serach bar */
+.input-wrapper {
+  background-color: black;
+  /* width: 5%; */
+  /* box-shadow: 0px 0px 0px 1px; */
+  border-radius: 10px;
+  height: 45px;
+}
+
+input {
+  background-color: white;
+  border-radius: 4px;
+  height: 100%;
+  width: 25vw;
+  height: 99%;
+  font-size: 1.25rem;
+  border-radius: 10px;
+  /* margin-right: 5px; */
+}
+
+input:focus {
+  outline: none;
+}
+
+#search-icon {
+  color: rgb(110, 131, 196);
+}
