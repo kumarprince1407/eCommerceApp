@@ -9,6 +9,7 @@ import CartDetails from "./components/CartDetails";
 import { Routes, Route } from "react-router-dom";
 
 import toast, { Toaster } from "react-hot-toast";
+import PaymentsPage from "./components/PaymentsPage";
 //Add filtering
 function App() {
   const [searchInput, setSearchInput] = useState(""); //Adding state for search input
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home searchInput={searchInput} />} />
         <Route path="/cart" element={<CartDetails />} />
+        <Route path="/payment_options" element={<PaymentsPage />} />
       </Routes>
       <Toaster />
     </>

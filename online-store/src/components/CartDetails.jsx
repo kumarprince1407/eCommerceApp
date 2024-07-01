@@ -10,6 +10,7 @@ import {
 } from "../redux/features/cartSlice";
 
 import toast from "react-hot-toast";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const CartDetails = () => {
   //const arr = [0, 1];
@@ -19,6 +20,7 @@ const CartDetails = () => {
   const [quantity, setTotalQuantity] = useState(0);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   //add To cart
   const handleIncrement = (e) => {
@@ -209,6 +211,21 @@ const CartDetails = () => {
                     </th>
                   </tfoot>
                 </table>
+              )}
+              {carts.length > 0 && (
+                <div
+                  className="checkout-button"
+                  style={{ textAlign: "center", margin: "5px" }}
+                >
+                  <NavLink
+                    to="/payment_options"
+                    state={{ totalPrice: totalPrice }}
+                  >
+                    <button className="btn btn-success mt-0 btn-medium w-25">
+                      <span>Proceed to Payment</span>
+                    </button>
+                  </NavLink>
+                </div>
               )}
             </div>
           </div>
