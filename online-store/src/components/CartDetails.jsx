@@ -221,6 +221,10 @@ const CartDetails = () => {
                     to="/payment_options"
                     state={{ totalPrice: totalPrice }}
                   >
+                    {/* To pass the 'totalPrice' from 'CartDetails to 'paymentPage', we make use of React Router's state mechanism here.
+                    When we navigate from 'CartDetails' to 'Paymentspage', we can pass 'totalPrice' as a state through the 'Navlink'.
+                    Then, in 'PaymentsPage', we can access this state using the 'useLocation' hook from React Router.
+                    */}
                     <button className="btn btn-success mt-0 btn-medium w-25">
                       <span>Proceed to Payment</span>
                     </button>

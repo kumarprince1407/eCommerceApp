@@ -15,7 +15,7 @@ const PaymentsPage = () => {
                 <h4 className="text-white m-0">Payment Options</h4>
               </div>
             </div>
-            <div className="cart-body p-0 ml-4">
+            <div className="cart-body p-0 ml-4 mr-4">
               <div className="wallet mt-4 ">
                 <h3 style={{ textAlign: "center", color: "red" }}>
                   GRAND TOTAL: {totalPrice}

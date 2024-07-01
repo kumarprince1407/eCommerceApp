@@ -126,3 +126,11 @@ input:focus {
 #search-icon {
   color: rgb(110, 131, 196);
 }
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
