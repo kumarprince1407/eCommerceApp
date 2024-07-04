@@ -1,4 +1,4 @@
-//cartSlice.js
+//CartSlice.jsx
 import { createSlice } from "@reduxjs/toolkit"; //1. Import the createSlice function
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 //2.Invoking the 'createSlice' function and assigning it to a constantvariable.
 const cartSlice = createSlice({
   name: "cartSlice", //This string is used to identify the slice
-  initialState: initialState, //Sets the initial stste of the slice
+  initialState: initialState, //Sets the initial state of the slice
   reducers: {
     //The object where we define the reducer functions that will handle actions related to the slice
 

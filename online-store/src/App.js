@@ -8,17 +8,19 @@ import Home from "./components/Home";
 import CartDetails from "./components/CartDetails";
 import { Routes, Route } from "react-router-dom";
 
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import PaymentsPage from "./components/PaymentsPage";
+import UserInfo from "./components/UserInfo";
 //Add filtering
 function App() {
-  const [searchInput, setSearchInput] = useState(""); //Adding state for search input
+  const [searchInput, setSearchInput] = useState(""); //Adding state for managing search input
 
   return (
     <>
       <Header setSearchInput={setSearchInput} />
       <Routes>
         <Route path="/" element={<Home searchInput={searchInput} />} />
+        <Route path="/userInfo" element={<UserInfo />} />
         <Route path="/cart" element={<CartDetails />} />
         <Route path="/payment_options" element={<PaymentsPage />} />
       </Routes>
