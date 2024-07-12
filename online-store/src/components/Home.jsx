@@ -76,7 +76,7 @@ const Home = ({ searchInput }) => {
   return (
     <>
       <section className="item_section mt-4 container">
-        <h2 className="px-4" style={{ fontWeight: 400 }}>
+        <h2 className="px-4" style={{ fontWeight: 300 }}>
           Choose from a variety of dishes
         </h2>
         <div className="row mt-2 d-flex justify-content-around align-items-center">

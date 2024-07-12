@@ -87,6 +87,7 @@ const AccountDetails = () => {
                   <TableCell align="left">
                     {" "}
                     {currentUser?.metadata.creationTime}
+                    {/* {currentUser.uid} */}
                   </TableCell>
                 </TableRow>
                 <TableRow>

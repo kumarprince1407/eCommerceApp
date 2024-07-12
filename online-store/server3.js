@@ -11,7 +11,9 @@ app.use(cors());
 //
 const { useAuth } = require("./AuthContext");
 const { getAuth } = require("firebase/auth");
+
 let firebaseId = null;
+let myId = null;
 //User data
 let users = [
   {

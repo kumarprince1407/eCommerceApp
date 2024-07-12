@@ -152,7 +152,7 @@ const CartDetails = () => {
                                 onClick={() => handleDelete(data.id)}
                               >
                                 {" "}
-                                <i className="fa fa-trash-alt mr-2"></i>
+                                <i className="fa fa-trash-alt mr-0"></i>
                               </button>
                             </td>
                             <td>
@@ -214,11 +214,11 @@ const CartDetails = () => {
                     <th>&nbsp;</th>
                     <th colSpan={3}>&nbsp;</th>
                     <th>
-                      Items in Cart <span className="ml-2 mr-2">:</span>
+                      Items in Cart:
                       <span className="text-danger">{quantity}</span>
                     </th>
                     <th className="text-right">
-                      Total Price <span className="ml-2 mr-2">:</span>
+                      Total Price: <span className="ml-1 mr-4"></span>
                       <span className="text-danger">{totalPrice}</span>
                     </th>
                   </tfoot>
@@ -237,7 +237,7 @@ const CartDetails = () => {
                     When we navigate from 'CartDetails' to 'Paymentspage', we can pass 'totalPrice' as a state through the 'Navlink'.
                     Then, in 'PaymentsPage', we can access this state using the 'useLocation' hook from React Router.
                     */}
-                    <button className="btn btn-success mt-0 btn-medium w-25">
+                    <button className="btn btn-success mt-0 btn-medium w-20">
                       <span>Proceed to Payment</span>
                     </button>
                   </NavLink>
