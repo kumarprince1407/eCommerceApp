@@ -9,10 +9,24 @@ import { addToCart } from "../redux/features/cartSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import Spinner from "react-bootstrap/Spinner";
+
 const Home = ({ searchInput }) => {
   const [cartData, setCartData] = useState(CardsData);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
+  //change
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 500 && window.innerHeight <= 850);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -70,7 +84,8 @@ const Home = ({ searchInput }) => {
             <Card
               key={index}
               style={{ width: "22rem", border: "none" }}
-              className="hove mb-4"
+              //className="hove mb-4"
+              className={`hove mb-4 ${isSmallScreen ? "responsive-card" : ""}`}
             >
               <Card.Img variant="top" className="cd" src={element.imgdata} />
               <div className="card_body">

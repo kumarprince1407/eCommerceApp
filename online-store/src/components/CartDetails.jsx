@@ -6,6 +6,7 @@ import {
   addToCart,
   removeFromCart,
   removeSingleItem,
+  removeItem,
   emptyEntireCart,
 } from "../redux/features/cartSlice";
 
@@ -28,14 +29,23 @@ const CartDetails = () => {
   };
 
   //remove from cart
+  // const handleDelete = (e) => {
+  //   dispatch(removeFromCart(e));
+  //   toast.success("Item removed from your cart");
+  // };
   const handleDelete = (e) => {
-    dispatch(removeFromCart(e));
+    dispatch(removeItem({ id: e, removeAll: true }));
+    console.log("ID", e);
+
     toast.success("Item removed from your cart");
   };
-
   //remove single item count
+  // const handleSingleItemRemoval = (e) => {
+  //   dispatch(removeSingleItem(e));
+  // };
+
   const handleSingleItemRemoval = (e) => {
-    dispatch(removeSingleItem(e));
+    dispatch(removeItem({ id: e.id, removeAll: false }));
   };
 
   //clear cart
@@ -173,6 +183,7 @@ const CartDetails = () => {
                                 >
                                   <i className="fa fa-minus"></i>
                                 </button>
+                                &nbsp;
                                 <input
                                   type="text"
                                   className="qty-input-box"
@@ -181,6 +192,7 @@ const CartDetails = () => {
                                   name=""
                                   id=""
                                 />
+                                &nbsp;
                                 <button
                                   className="prdct-qty-btn"
                                   type="button"

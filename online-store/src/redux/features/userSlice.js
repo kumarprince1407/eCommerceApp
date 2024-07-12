@@ -1,7 +1,6 @@
 //userSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import UserInfo from "../../components/UserInfo";
 
 //Async thunk action created using createAsyncThunk which takes TWO arguments
 export const submitUserInfo = createAsyncThunk(
@@ -20,14 +19,73 @@ export const submitUserInfo = createAsyncThunk(
   }
 );
 
+//Async thunk to fetch data
+export const fetchUserData = createAsyncThunk(
+  "user/fetchUserData", //String that represents the action type
+  async (id, { rejectWithValue }) => {
+    //async function that makes a GET request to the backend APi
+    //{rejectWithValue}: It is a method provided by 'createAsyncThunk' to retain a custom error message
+    try {
+      const response = await axios.get(`http://localhost:3005/users/${id}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//Async thunk for editing user data
+export const editUserInfo = createAsyncThunk(
+  "user/editUserInfo",
+  async ({ id, updatedUserInfo }, { rejectWithValue }) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:3005/users/${id}`,
+        updatedUserInfo
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 //Initial state
+// const initialState = {
+//   users: [], // to store the user information
+//   status: "idle", //keeps track of the current status of the async operation
+//   error: null, //stores the error message(if any)
+// };
+
 const initialState = {
-  users: [], // to store the user information
-  status: "idle", //keeps track of the current status of the async operation
-  error: null, //stores the error message(if any)
+  user: null,
+  status: "idle",
+  error: null,
 };
 
 //Create the slice
+// const userSlice = createSlice({
+//   name: "user",
+//   initialState,
+//   reducers: {
+//     //
+//   },
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(submitUserInfo.pending, (state) => {
+//         state.status = "loading";
+//       })
+//       .addCase(submitUserInfo.fulfilled, (state, action) => {
+//         state.status = "succeeded";
+//         state.users.push(action.payload);
+//       })
+//       .addCase(submitUserInfo.rejected, (state, action) => {
+//         state.status = "rejected";
+//         state.error = action.payload;
+//       });
+//   },
+// });
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -36,15 +94,26 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(submitUserInfo.pending, (state) => {
+      .addCase(fetchUserData.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(submitUserInfo.fulfilled, (state, action) => {
+      .addCase(fetchUserData.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.users.push(action.payload);
+        state.user = action.payload;
       })
-      .addCase(submitUserInfo.rejected, (state, action) => {
+      .addCase(fetchUserData.rejected, (state, action) => {
         state.status = "rejected";
+        state.error = action.payload;
+      })
+      .addCase(editUserInfo.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(editUserInfo.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload;
+      })
+      .addCase(editUserInfo.rejected, (state, action) => {
+        state.status = "failed";
         state.error = action.payload;
       });
   },

@@ -1,3 +1,4 @@
+/* style.css */
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,500;0,600;0,700;1,400;1,600&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,500&display=swap");
 
 body {
@@ -133,4 +134,17 @@ input:focus {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+/*Adding responsiveness for small screens */
+
+@media (max-width: 500px) and (max-height: 850px) {
+  .responsive-card {
+    width: 13rem !important;
+    height: 27rem !important;
+  }
+
+  .responsive-img {
+    height: 8rem !important;
+  }
 }
