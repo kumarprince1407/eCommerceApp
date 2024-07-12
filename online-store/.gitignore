@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Firebase credentials
+online-store/src/credentials/online-store-5330d-firebase-adminsdk-qjuwg-d4a74670ab.json
