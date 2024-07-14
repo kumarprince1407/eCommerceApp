@@ -16,17 +16,17 @@ const Home = ({ searchInput }) => {
   const dispatch = useDispatch();
 
   //change
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  //const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 500 && window.innerHeight <= 850);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setIsSmallScreen(window.innerWidth <= 500 && window.innerHeight <= 850);
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -76,21 +76,21 @@ const Home = ({ searchInput }) => {
   return (
     <>
       <section className="item_section mt-4 container">
-        <h2 className="px-4" style={{ fontWeight: 300 }}>
+        <h2 className="px-4" style={{ fontWeight: 350 }}>
           Choose from a variety of dishes
         </h2>
         <div className="row mt-2 d-flex justify-content-around align-items-center">
           {cartData.map((element, index) => (
             <Card
               key={index}
-              style={{ width: "22rem", border: "none" }}
-              //className="hove mb-4"
-              className={`hove mb-4 ${isSmallScreen ? "responsive-card" : ""}`}
+              style={{ width: "20rem", height: "auto", border: "none" }}
+              className="hove mb-4"
+              // className={`hove mb-4 ${isSmallScreen ? "responsive-card" : ""}`}
             >
               <Card.Img variant="top" className="cd" src={element.imgdata} />
               <div className="card_body">
                 <div className="upper_data d-flex justify-content-between align-items-center">
-                  <h4 className="mt-2">{element.dish}</h4>
+                  <h4 className="mt-1">{element.dish}</h4>
                   <span>{element.rating}&nbsp;★</span>
                 </div>
                 <div className="lower_data d-flex justify-content-between">
@@ -102,7 +102,8 @@ const Home = ({ searchInput }) => {
                   <img src={element.imgdata} className="limg" alt=""></img>
                   <Button
                     style={{
-                      width: "150px",
+                      minWidth: "13vw",
+                      maxWidth: "120px",
                       background: "#ff3054db",
                       border: "none",
                     }}

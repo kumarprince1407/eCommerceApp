@@ -10,9 +10,10 @@ const SearchBar = ({ setSearchInput }) => {
   };
   return (
     <>
-      <div className="input-wrapper">
+      <div className="input-wrapper ">
         <input
           placeholder="Type to search..."
+          style={{ fontSize: "small" }}
           // value={input}
           // onChange={(e) => setInput(e.target.value)}
           onChange={handleChange} //Update state on change
