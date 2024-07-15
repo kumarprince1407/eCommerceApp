@@ -19,6 +19,20 @@ export const submitUserInfo = createAsyncThunk(
   }
 );
 
+//Change
+//Async thunk action to add new id
+export const addUser = createAsyncThunk(
+  "user/addUser",
+  async (uid, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("http://localhost:3005/users", { uid });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 //Async thunk to fetch data
 export const fetchUserData = createAsyncThunk(
   "user/fetchUserData", //String that represents the action type
@@ -113,6 +127,17 @@ const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(editUserInfo.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(addUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload;
+      })
+      .addCase(addUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

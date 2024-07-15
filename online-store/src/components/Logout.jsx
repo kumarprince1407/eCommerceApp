@@ -13,7 +13,13 @@ const Logout = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClose = () => {
-    navigate(`/account/${1}`);
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      navigate(`/account/${user.uid}`);
+    } else {
+      console.log("No user is logged in");
+    }
     setAnchorEl(null);
   };
 

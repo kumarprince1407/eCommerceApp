@@ -8,13 +8,14 @@ import "./cartStyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { editUserInfo, fetchUserData } from "../redux/features/userSlice";
 import { useAuth } from "./AuthContext";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 const EditAccountDetails = () => {
   const { currentUser } = useAuth();
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = location.state.id;
+  const { id } = useParams();
+  const userId = id || location.state.id;
   const { user } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ const EditAccountDetails = () => {
         firstname: user.firstname,
         lastname: user.lastname,
         contact: user.contact,
-        gender: user.gender, //check
+        gender: user.gender,
         address: user.address,
       });
     }
@@ -80,11 +81,15 @@ const EditAccountDetails = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      dispatch(editUserInfo({ id: 1, updatedUserInfo: formData })).then(() => {
-        navigate(`/account/${1}`);
-      });
-    } else {
-      setFormError("Please fill in all the input fields");
+      if (currentUser && currentUser.uid) {
+        dispatch(
+          editUserInfo({ id: currentUser.uid, updatedUserInfo: formData })
+        ).then(() => {
+          navigate(`/account/${currentUser.uid}`);
+        });
+      } else {
+        setFormError("Please fill in all the input fields");
+      }
     }
   };
 

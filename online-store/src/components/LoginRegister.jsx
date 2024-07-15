@@ -12,6 +12,10 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
+//Change
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/features/userSlice";
+
 const LoginRegister = () => {
   const app = initializeApp(firebaseConfig);
   const emailRegex = /^[a-z]{3,}(.[0-9a-z]*)?@([a-z]){2,}.[a-z]+(.in)*$/;
@@ -29,12 +33,16 @@ const LoginRegister = () => {
 
   const auth = getAuth();
   console.log("Auth", auth);
+
+  const dispatch = useDispatch();
+
   const ctaClickHandler = (e) => {
     e.preventDefault();
     if (onLoginPage) {
       signInWithEmailAndPassword(auth, email, password)
         .then((auth) => {
           if (auth) {
+            dispatch(addUser(auth.user.uid));
             navigate("/home");
           }
         })

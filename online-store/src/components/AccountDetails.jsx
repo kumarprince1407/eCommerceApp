@@ -17,7 +17,7 @@ import { fetchUserData } from "../redux/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const AccountDetails = () => {
-  const [userData, setUserData] = useState(null);
+  //const [userData, setUserData] = useState(null);
 
   const { currentUser } = useAuth();
   console.log("Current user:", currentUser);
@@ -27,33 +27,41 @@ const AccountDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
+  //change
 
-  const firebaseId = currentUser.uid;
-  const myAccount = "myAccount";
+  const { user: userData } = useSelector((state) => state.user); // Use the user data from the Redux store
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      if (user) {
-        try {
-          const response = await fetch(`http://localhost:3005/users/${1}`);
-          if (response.ok) {
-            const data = await response.json();
-            setUserData(data);
-          } else {
-            console.log("Failed to fetch user data");
-          }
-        } catch (error) {
-          console.log("Error fetching user data:", error);
-        }
-      } else {
-        console.log("No user is logged in");
-      }
-    };
-    fetchUserData();
-  }, [user]);
+    if (user && user.uid) {
+      dispatch(fetchUserData(user.uid)); // Fetch user data from Redux store
+    }
+  }, [user, dispatch]);
+
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     if (user) {
+  //       try {
+  //         const response = await fetch(
+  //           `http://localhost:3005/users/${user.uid}`
+  //         );
+  //         if (response.ok) {
+  //           const data = await response.json();
+  //           setUserData(data);
+  //         } else {
+  //           console.log("Failed to fetch user data");
+  //         }
+  //       } catch (error) {
+  //         console.log("Error fetching user data:", error);
+  //       }
+  //     } else {
+  //       console.log("No user is logged in");
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, [user]);
 
   const handleEditClick = () => {
-    navigate(`/account/edit/${1}`, { state: { id: user.id } });
-    //navigate(`/account/edit/${myAccount}`, { state: { id: myAccount } });
+    navigate(`/account/edit/${id}`, { state: { id: id } });
   };
 
   //   if (!userData) {
